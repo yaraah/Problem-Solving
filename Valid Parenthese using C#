@@ -1,0 +1,68 @@
+/* Given a string s containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.
+
+An input string is valid if:
+
+    Open brackets must be closed by the same type of brackets.
+    Open brackets must be closed in the correct order.
+
+ 
+
+Example 1:
+
+Input: s = "()"
+Output: true
+
+Example 2:
+
+Input: s = "()[]{}"
+Output: true
+*/
+
+
+public class Solution {
+    public bool IsValid(string s) {
+        Stack<char> stack=new Stack<char>();
+        if(s.Length==1)
+            return false;
+        if(s.Length==0)
+            return false;
+         for(int i=0;i<s.Length;i++)
+        {
+            char sub=s[i];
+           
+            if((sub=='(')||(sub=='{')||(sub=='[')){
+                 stack.Push(sub);
+                continue;
+            }
+             if(stack.Count==0)
+                 return false;
+             if(!CheckPair(stack,sub))
+                 return false;
+        }
+        return stack.Count==0;
+    }
+    public static bool CheckPair(Stack<char> stack,char sub)
+    {
+     char check;
+                switch(sub)
+                {
+                      
+                    case ')':
+                         check=stack.Pop();
+                        if(check=='{'||check=='[')
+                            return false;
+                        break;
+                    case ']':
+                         check=stack.Pop();
+                        if(check=='{'||check=='(')
+                            return false;
+                        break;
+                    case '}':
+                         check=stack.Pop();
+                         if(check=='['||check=='(')
+                            return false;
+                        break;
+                }
+        return true;
+    }
+}
